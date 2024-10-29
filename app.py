@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, request, render_template, send_file
 from keras.models import load_model
 import numpy as np
 from PIL import Image
@@ -16,6 +16,10 @@ logging.basicConfig(level=logging.INFO)
 @app.route("/")
 def home():
     return render_template('index.html')
+
+@app.route("/AIDoctorLogo.png")
+def get_logo():
+    return send_file('templates/AIDoctorLogo.png')
 
 @app.route('/predict', methods=['POST'])
 def predict():
