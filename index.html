@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X-ray Image Prediction</title>
+    <script>
+        // JavaScript function to handle form submission and display the prediction
+        async function submitForm(event) {
+            event.preventDefault(); // Prevents page from refreshing
+
+            // Get the file from the input
+            const formData = new FormData();
+            const fileInput = document.getElementById('file');
+            formData.append('file', fileInput.files[0]);
+
+            // Make the POST request to the predict endpoint
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const textResponse = await response.text();  // Get the raw response as text
+                console.log("Raw response:", textResponse);  // Log the raw response
+
+                const result = JSON.parse(textResponse);  // Parse it manually
+                if (response.ok) {
+                    document.getElementById('result').innerText = 'Prediction Label: ' + result.label;
+                } else {
+                    document.getElementById('result').innerText = 'Error: ' + result.error;
+                }
+            } catch (error) {
+                document.getElementById('result').innerText = 'Error: ' + error.message;
+            }
+        }
+    </script>
+</head>
+<body>
+    <h2>X-ray Image Prediction</h2>
+    
+    <!-- Form to upload image -->
+    <form onsubmit="submitForm(event)">
+        <label for="file">Upload an X-ray image:</label>
+        <input type="file" id="file" name="file" accept="image/*" required>
+        <br><br>
+        <button type="submit">Predict</button>
+    </form>
+    
+    <!-- Display prediction result -->
+    <p id="result"></p>
+</body>
+</html>
