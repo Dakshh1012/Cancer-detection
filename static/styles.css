@@ -1,0 +1,112 @@
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f3e5f5; /* Light violet background */
+    color: #4a148c; /* Dark violet text */
+}
+
+h2 {
+    color: #6a1b9a; /* Purple header color */
+    margin-bottom: 20px; /* Add space below the header */
+}
+
+img.logo {
+    width: 150px;
+    margin-bottom: 20px; /* Space below logo */
+}
+
+/* Options Container Styling */
+.options-container {
+    background: #ffffff; /* White background */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    max-width: 500px;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Form and Button Styling */
+form {
+    width: 100%; /* Full width */
+    max-width: 500px; /* Limit maximum width */
+    background: #ffffff; /* White background */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    padding: 20px;
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch; /* Align form elements */
+}
+
+label {
+    font-size: 1.1em;
+    color: #4a148c; /* Dark violet text */
+    margin-top: 10px;
+}
+
+input[type="text"], 
+input[type="number"],
+input[type="file"] {
+    width: 100%; /* Full width of form */
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* Include padding and border in element's total width */
+}
+
+button {
+    padding: 12px;
+    font-size: 1em;
+    background-color: #8e24aa; /* Violet button */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #ab47bc; /* Lighter violet on hover */
+}
+
+.custom-file-label {
+    display: inline-block;
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    color: #fff;
+    background-color: #8e24aa;
+    border: 2px solid #8e24aa;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 15px;
+}
+
+.custom-file-label:hover {
+    background-color: #ab47bc;
+    border-color: #ab47bc;
+}
+
+#result {
+    margin-top: 20px;
+    font-weight: bold;
+    color: #d32f2f; /* Error message color */
+    text-align: center; /* Center result text */
+}

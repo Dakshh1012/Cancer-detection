@@ -5,114 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Doctor</title>
     <link rel='icon' href='templates/AIDoctorLogo.png' type='image/png'>
-    <style>
-        /* General Styling */
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            background-color: #f3e5f5; /* Light violet background */
-            color: #4a148c; /* Dark violet text */
-        }
-
-        h2 {
-            color: #6a1b9a; /* Purple header color */
-        }
-
-        img {
-            width: 150px; /* Set logo width */
-            margin-bottom: 20px; /* Space below logo */
-        }
-
-        /* Form and Button Styling */
-        .options-container, form {
-            background: #ffffff; /* White background for container */
-            border-radius: 10px; /* Rounded corners */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-            max-width: 450px; 
-            text-align: center;
-            margin-top: 20px;
-            padding: 20px; 
-        }
-
-        label, p {
-            font-size: 1.1em;
-            color: #4a148c; /* Dark violet text */
-        }
-
-        .file-input-wrapper {
-            position: relative;
-            display: inline-block;
-            width: 100%;
-            margin-top: 10px;
-        }
-
-        .file-input {
-            opacity: 0;
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 100%;
-            cursor: pointer;
-        }
-
-        .custom-file-label {
-            display: inline-block;
-            width: 100%;
-            padding: 10px;
-            font-size: 1em;
-            color: #fff; /* White text */
-            background-color: #8e24aa; /* Violet background */
-            border: 2px solid #8e24aa; /* Violet border */
-            border-radius: 5px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .custom-file-label:hover {
-            background-color: #ab47bc; /* Lighter violet on hover */
-            border-color: #ab47bc;
-        }
-
-        button {
-            margin-top: 15px;
-            padding: 12px 24px;
-            font-size: 1em;
-            background-color: #8e24aa; /* Violet button */
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        button:hover {
-            background-color: #ab47bc; /* Lighter violet on hover */
-        }
-
-        #result {
-            margin-top: 20px;
-            font-weight: bold;
-            color: #d32f2f; /* Error message color */
-        }
-        
-        img.logo{
-            width: 260px;
-            height: 260px;
-            padding: 10px;
-
-        }
-    </style>
+    <link rel="stylesheet" href="static/styles.css">
     <script>
-        // JavaScript function to handle form submission and display the prediction
         async function submitForm(event) {
-            event.preventDefault(); // Prevents page from refreshing
+            event.preventDefault();
 
             const formData = new FormData();
             const fileInput = document.getElementById('file');
@@ -138,30 +34,48 @@
             }
         }
 
+        function previewImage(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function() {
+                const imagePreview = document.getElementById('image-preview');
+                const imagePreviewContainer = document.getElementById('image-preview-container');
+                
+                imagePreview.src = reader.result;
+                imagePreviewContainer.style.display = 'block';
+            };
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+
         function redirectToForm() {
-            window.location.href = '/form_page.html'; // Replace with your form page URL
+            window.location.href = '/form_page';
         }
     </script>
 </head>
 <body>
-    <img class="logo" src="AIDoctorLogo.png" alt="AIDoctor Logo"> <!-- Logo added -->
+    <img class="logo" src="AIDoctorLogo.png" alt="AIDoctor Logo">
     <h2>X-ray Image Prediction</h2>
 
-    <!-- Options to upload image or fill out form -->
     <div class="options-container">
-        <button onclick="redirectToForm()">Fill Out Form</button>
+        <button onclick="redirectToForm()">Check if tumour is Benign or Malignant</button>
         <p>or</p>
         <form onsubmit="submitForm(event)">
-            <label for="file">Upload an X-ray image:</label>
+            <label for="file">Upload an X-ray image of the Brain:</label>
             <div class="file-input-wrapper">
-                <span class="custom-file-label">Choose an image file</span>
-                <input type="file" id="file" name="file" accept="image/*" class="file-input" required>
+                <input type="file" id="file" name="file" accept="image/*" class="file-input" required onchange="previewImage(event)">
             </div>
-            <button type="submit">Predict</button>
+            <button type="submit">Predict type of tumour</button>
         </form>
+        <div id="image-preview-container" style="display: none;">
+            <h3>Image Preview:</h3>
+            <img id="image-preview" src="" alt="Image Preview" style="max-width: 100%; max-height: 300px; margin-top: 15px;">
+        </div>
     </div>
 
-    <!-- Display prediction result -->
     <p id="result"></p>
 </body>
 </html>
