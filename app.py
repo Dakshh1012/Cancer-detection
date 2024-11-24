@@ -9,7 +9,7 @@ import pandas as pd
 app = Flask(__name__)
 
 model = load_model('model.keras')
-forest_model = joblib.load('forest_model.joblib')
+lr_model = joblib.load('logistic_model.joblib')
 
 logging.basicConfig(level=logging.INFO)
 
@@ -52,8 +52,8 @@ def predict():
         app.logger.error('Error processing file: %s', str(e))
         return jsonify({'error': str(e)}), 500
 
-@app.route('/predict_forest', methods=['POST'])
-def predict_forest():
+@app.route('/predict_lr', methods=['POST'])
+def predict_lr():
     try:
         data = request.get_json()
         input_df = pd.DataFrame([data], columns=[
@@ -67,7 +67,7 @@ def predict_forest():
             "fractal_dimension_worst"
         ])
         input_df['id'] = 842302
-        prediction = forest_model.predict(input_df)
+        prediction = lr_model.predict(input_df)
         return jsonify({'diagnosis': "Malignant" if int(prediction[0]) == 1 else "Benign"})
     except Exception as e:
         app.logger.error('Error during prediction: %s', str(e))
